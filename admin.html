@@ -49,49 +49,39 @@
 
 <script>
   fetch("https://cyber-admin-backend-1.onrender.com/admin/logs")
-
-    // Frontend - Make sure you're using POST method
-  method: 'POST',  // Must match backend
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    username: 'user',
-    password: 'pass'
-  })
-})
-.then(res => res.json())
-.then(data => console.log(data))
-.catch(err => console.error(err));
     .then(res => res.json())
     .then(data => {
       const table = document.getElementById("logTable");
 
-      if (data.length === 0) {
+      if (!data || data.length === 0) {
         table.innerHTML = "<tr><td colspan='5'>No logs yet</td></tr>";
         return;
       }
 
+      table.innerHTML = "";
+
       data.reverse().forEach(log => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${log.ip}</td>
-          <td>${log.userAgent}</td>
-          <td>${log.action}</td>
-          <td>${log.page}</td>
-          <td>${log.time}</td>
+          <td>${log.ip || "-"}</td>
+          <td>${log.userAgent || "-"}</td>
+          <td>${log.action || "-"}</td>
+          <td>${log.page || "-"}</td>
+          <td>${log.time || "-"}</td>
         `;
         table.appendChild(row);
       });
     })
     .catch(err => {
-      alert("Backend not running!");
       console.error(err);
+      alert("Backend not running!");
     });
 </script>
 
+
 </body>
 </html>
+
 
 
 
