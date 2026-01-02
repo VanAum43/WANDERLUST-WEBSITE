@@ -48,39 +48,43 @@
 </table>
 
 <script>
-  fetch("https://cyber-admin-backend-1.onrender.com/admin/logs")
-    .then(res => res.json())
-    .then(data => {
-      const table = document.getElementById("logTable");
+fetch("https://cyber-admin-backend-1.onrender.com/admin/logs")
+  .then(res => {
+    if (!res.ok) throw new Error("Backend error");
+    return res.json();
+  })
+  .then(data => {
+    const table = document.getElementById("logTable");
 
-      if (!data || data.length === 0) {
-        table.innerHTML = "<tr><td colspan='5'>No logs yet</td></tr>";
-        return;
-      }
+    if (!data || data.length === 0) {
+      table.innerHTML = "<tr><td colspan='5'>No logs yet</td></tr>";
+      return;
+    }
 
-      table.innerHTML = "";
+    table.innerHTML = "";
 
-      data.reverse().forEach(log => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${log.ip || "-"}</td>
-          <td>${log.userAgent || "-"}</td>
-          <td>${log.action || "-"}</td>
-          <td>${log.page || "-"}</td>
-          <td>${log.time || "-"}</td>
-        `;
-        table.appendChild(row);
-      });
-    })
-    .catch(err => {
-      console.error(err);
-      alert("Backend not running!");
+    data.reverse().forEach(log => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${log.ip}</td>
+        <td>${log.userAgent}</td>
+        <td>${log.action || "-"}</td>
+        <td>${log.page || "-"}</td>
+        <td>${log.time}</td>
+      `;
+      table.appendChild(row);
     });
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Backend not running!");
+  });
 </script>
 
 
 </body>
 </html>
+
 
 
 
