@@ -69,6 +69,38 @@
         }
     </style>
 </head>
+        <script>
+document.getElementById("registerForm").addEventListener("submit", async function (e) {
+  e.preventDefault(); // 🚨 STOPS 405 ERROR
+
+  const username = document.getElementById("reg-username").value;
+  const email = document.getElementById("reg-email-address").value;
+
+  try {
+    const res = await fetch("https://cyber-admin-backend-1.onrender.com/log", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "register",
+        username: username,
+        email: email,
+        page: window.location.pathname
+      })
+    });
+
+    if (res.ok) {
+      alert("Registered successfully ✅");
+    } else {
+      alert("Backend error ❌");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error ❌");
+  }
+});
+</script>
 <body class="text-gray-800">
 <div id="app">
 <div class="page active" id="main-content">
@@ -344,7 +376,7 @@
                             Create a new account
                         </h2>
 </div>
-<form action="#" class="mt-8 space-y-6" method="POST">
+<form id="registerForm" class="mt-8 space-y-6">
 <div class="rounded-md shadow-sm -space-y-px">
 <div>
 <label class="sr-only" for="reg-username">Username</label>
@@ -578,5 +610,6 @@
             });
         });
     </script>
+
 
 </body></html>
