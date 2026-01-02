@@ -49,6 +49,19 @@
 
 <script>
   fetch("https://cyber-admin-backend.onrender.com/admin/logs")
+    // Frontend - Make sure you're using POST method
+  method: 'POST',  // Must match backend
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    username: 'user',
+    password: 'pass'
+  })
+})
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(err => console.error(err));
     .then(res => res.json())
     .then(data => {
       const table = document.getElementById("logTable");
@@ -78,4 +91,5 @@
 
 </body>
 </html>
+
 
