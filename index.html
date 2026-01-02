@@ -69,7 +69,7 @@
         }
     </style>
 </head>
-        <script>
+<script>
 document.getElementById("registerForm").addEventListener("submit", async function (e) {
   e.preventDefault(); // 🚨 STOPS 405 ERROR
 
@@ -101,6 +101,22 @@ document.getElementById("registerForm").addEventListener("submit", async functio
   }
 });
 </script>
+<script>
+fetch("https://cyber-admin-backend-1.onrender.com/log", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    action: "Page Loaded",
+    page: window.location.pathname
+  })
+})
+.then(res => res.json())
+.then(data => console.log("Log sent:", data))
+.catch(err => console.error("Log error:", err));
+</script>
+
 <body class="text-gray-800">
 <div id="app">
 <div class="page active" id="main-content">
@@ -613,3 +629,4 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
 
 </body></html>
+
